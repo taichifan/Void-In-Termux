@@ -125,8 +125,8 @@ checkintegrity() {
 	printf "\n${blue} [*] Checking integrity of file...\n"
 	echo " [*] The script will immediately terminate in case of integrity failure"
 	printf ' '
-	sha256sum -c sha256sums.txt | grep ${rootfs}.*OK || {
-		printf "$red Sorry :( to say your downloaded linux file was corrupted or half downloaded, but don't worry, just rerun my script\n${reset}"
+	grep ${rootfs} sha256sums.txt | sha256sum -c || {
+		printf "$red Sorry :( to say your downloaded linux file ${rootfs} was corrupted or half downloaded, but don't worry, just rerun my script\n${reset}"
 		exit 1
 	}
 }
@@ -221,5 +221,7 @@ printf "\n${blue} [∆] My official email:${yellow}		vingjroak@gmail.com\n"
 printf "\n${blue} [∆] Official email for Kali Nethunter author which is where I took the script from.:${yellow}		lkpandey950@gmail.com\n"
 printf "$blue [∆] His website:${yellow}		https://hax4us.com\n"
 printf "$blue [∆] His YouTube channel:${yellow}	https://youtube.com/hax4us\n"
+printline
+printf "$blue [∆] You should update the system using xbps-install -Su the first time after using startvoid.\n"
 printline
 printf "$reset"
