@@ -11,6 +11,11 @@ if [ -z "$2" ]
 then
 	libc=""
 else
+	if [ "$2" != "musl" ]
+	then
+		echo Error second argument must be musl. Exiting.
+		exit 1
+	fi
 	libc="$2-"
 fi
 red='\033[1;31m'
@@ -54,6 +59,9 @@ checksysinfo() {
 		armeabi|armeabi-v7a)
 			SETARCH=armhf
 			;;
+		i686|x86)
+			SETARCH=i686
+			;;
 		*)
 			unknownarch
 			;;
@@ -68,10 +76,14 @@ checkdeps() {
 	apt update -y &> /dev/null
 	echo " [*] Checking for all required tools..."
 
-	for i in proot tar axel; do
+	for i in proot tar axel xz; do
 		if [ -e $PREFIX/bin/$i ]; then
 			echo "  • $i is OK"
 		else
+			if [ "$i" = "xz" ]
+			then
+				i=xz-utils
+			fi
 			echo "Installing ${i}..."
 			apt install -y $i || {
 				printf "$red"
@@ -94,7 +106,7 @@ seturl() {
 
 gettarfile() {
 	printf "$blue [*] Getting tar file...$reset\n\n"
-	DESTINATION=$HOME/kali-${SETARCH}
+	DESTINATION=$HOME/void-${libc}${SETARCH}
 	rootfs="void-$SETARCH-${libc}ROOTFS-${build_date}.tar.xz"
 	seturl $SETARCH
 	axel ${EXTRAARGS} --alternate "$URL"
@@ -104,7 +116,7 @@ gettarfile() {
 
 getsha() {
 	printf "\n${blue} [*] Getting SHA ... $reset\n\n"
-	axel ${EXTRAARGS} --alternate "https://a-hel-fi.m.void.org/live/current/sha512sum.txt"
+	axel ${EXTRAARGS} --alternate "https://a-hel-fi.m.voidlinux.org/live/current/sha256sums.txt"
 }
 
 # Utility function to check integrity
@@ -113,7 +125,7 @@ checkintegrity() {
 	printf "\n${blue} [*] Checking integrity of file...\n"
 	echo " [*] The script will immediately terminate in case of integrity failure"
 	printf ' '
-	sha512sum -c sha512sum.txt || {
+	sha256sum -c sha256sums.txt | grep ${rootfs}.*OK || {
 		printf "$red Sorry :( to say your downloaded linux file was corrupted or half downloaded, but don't worry, just rerun my script\n${reset}"
 		exit 1
 	}
@@ -123,13 +135,14 @@ checkintegrity() {
 
 extract() {
 	printf "$blue [*] Extracting... $reset\n\n"
-	proot --link2symlink tar -xf $rootfs 2> /dev/null || :
+	mkdir -p ${DESTINATION}
+	proot --link2symlink tar -C ${DESTINATION} -xf $rootfs 2> /dev/null || :
 }
 
 # Utility function for login file
 
 createloginfile() {
-	bin=${PREFIX}/bin/startkali
+	bin=${PREFIX}/bin/startvoid
 	cat > $bin <<- EOM
 #!/data/data/com.termux/files/usr/bin/bash -e
 unset LD_PRELOAD
@@ -163,7 +176,7 @@ if [ `pwd` != $HOME ]; then
 printf "$red You are not in home :($reset"
 exit 2
 fi
-printf "\n${yellow} You are going to install Kali Nethunter In Termux Without Root ;) Cool\n\n"
+printf "\n${yellow} You are going to install Void Linux In Termux Without Root ;) Cool\n\n"
 pre_cleanup
 checksysinfo
 checkdeps
@@ -179,7 +192,7 @@ extract
 createloginfile
 post_cleanup
 
-printf "$blue [*] Configuring Kali For You ..."
+printf "$blue [*] Configuring Void For You ..."
 
 # Utility function for resolv.conf
 resolvconf() {
@@ -195,17 +208,18 @@ resolvconf
 finalwork() {
 	[ -e $HOME/finaltouchup.sh ] && rm $HOME/finaltouchup.sh
 	echo
-	axel -a https://github.com/Hax4us/Nethunter-In-Termux/raw/master/finaltouchup.sh
+	axel -a https://github.com/taichifan/Void-In-Termux/raw/master/finaltouchup.sh
 	DESTINATION=$DESTINATION SETARCH=$SETARCH bash $HOME/finaltouchup.sh
 } 
 #finalwork
 
 printline
-printf "\n${yellow} Now you can enjoy Kali Nethuter in your Termux :)\n Don't forget to like my hard work for termux and many other things\n"
+printf "\n${yellow} Now you can enjoy Void Linux in your Termux :)\n Don't forget to like my hard work for termux and many other things\n"
 printline
 printline
-printf "\n${blue} [∆] My official email:${yellow}		lkpandey950@gmail.com\n"
-printf "$blue [∆] My website:${yellow}		https://hax4us.com\n"
-printf "$blue [∆] My YouTube channel:${yellow}	https://youtube.com/hax4us\n"
+printf "\n${blue} [∆] My official email:${yellow}		vingjroak@gmail.com\n"
+printf "\n${blue} [∆] Official email for Kali Nethunter author which is where I took the script from.:${yellow}		lkpandey950@gmail.com\n"
+printf "$blue [∆] His website:${yellow}		https://hax4us.com\n"
+printf "$blue [∆] His YouTube channel:${yellow}	https://youtube.com/hax4us\n"
 printline
 printf "$reset"
