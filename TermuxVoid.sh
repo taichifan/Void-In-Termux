@@ -54,10 +54,10 @@ checksysinfo() {
 	printf "$blue [*] Checking host architecture ..."
 	case $(getprop ro.product.cpu.abi) in
 		arm64-v8a)
-			SETARCH=arm64
+			SETARCH=aarch64
 			;;
 		armeabi|armeabi-v7a)
-			SETARCH=armhf
+			SETARCH=armv7l
 			;;
 		i686|x86)
 			SETARCH=i686
