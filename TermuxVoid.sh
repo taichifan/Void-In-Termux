@@ -125,7 +125,7 @@ checkintegrity() {
 	printf "\n${blue} [*] Checking integrity of file...\n"
 	echo " [*] The script will immediately terminate in case of integrity failure"
 	printf ' '
-	grep ${rootfs} sha256.txt | sha256 -c || {
+	grep ${rootfs} sha256.txt | sha256sum -c || {
 		printf "$red Sorry :( to say your downloaded linux file ${rootfs} was corrupted or half downloaded, but don't worry, just rerun my script\n${reset}"
 		exit 1
 	}
