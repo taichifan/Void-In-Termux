@@ -116,7 +116,7 @@ gettarfile() {
 
 getsha() {
 	printf "\n${blue} [*] Getting SHA ... $reset\n\n"
-	axel ${EXTRAARGS} --alternate "https://a-hel-fi.m.voidlinux.org/live/current/sha256sums.txt"
+	axel ${EXTRAARGS} --alternate "https://a-hel-fi.m.voidlinux.org/live/current/sha256.txt"
 }
 
 # Utility function to check integrity
@@ -125,7 +125,7 @@ checkintegrity() {
 	printf "\n${blue} [*] Checking integrity of file...\n"
 	echo " [*] The script will immediately terminate in case of integrity failure"
 	printf ' '
-	grep ${rootfs} sha256sums.txt | sha256sum -c || {
+	grep ${rootfs} sha256.txt | sha256 -c || {
 		printf "$red Sorry :( to say your downloaded linux file ${rootfs} was corrupted or half downloaded, but don't worry, just rerun my script\n${reset}"
 		exit 1
 	}
