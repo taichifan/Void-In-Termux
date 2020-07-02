@@ -116,7 +116,7 @@ gettarfile() {
 
 getsha() {
 	printf "\n${blue} [*] Getting SHA ... $reset\n\n"
-	axel ${EXTRAARGS} --alternate "https://a-hel-fi.m.voidlinux.org/live/current/sha256sums.txt"
+	axel ${EXTRAARGS} --alternate "https://a-hel-fi.m.voidlinux.org/live/current/sha256.txt"
 }
 
 # Utility function to check integrity
