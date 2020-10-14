@@ -11,3 +11,6 @@ This has scripts modified from Nethunter-In-Termux. So far, the update has worke
 1. #xbps-install -Su
 
 #### You have any idea to improve ? So Just give PR
+
+Tested:
+<img alt="Screenshot" src="Screenshot_20201014-153143.jpg">
