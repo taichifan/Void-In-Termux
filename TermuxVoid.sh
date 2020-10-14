@@ -107,7 +107,7 @@ seturl() {
 gettarfile() {
 	printf "$blue [*] Getting tar file...$reset\n\n"
 	DESTINATION=$HOME/void-${libc}${SETARCH}
-	rootfs="void-$SETARCH-${libc}ROOTFS-${build_date}.tar.xz"
+	rootfs="void-$SETARCH-${libc}ROOTFS-${20191109}.tar.xz"
 	seturl $SETARCH
 	axel ${EXTRAARGS} --alternate "$URL"
 }
@@ -120,16 +120,16 @@ getsha() {
 }
 
 # Utility function to check integrity
-#
-#checkintegrity() {
-#	printf "\n${blue} [*] Checking integrity of file...\n"
-#	echo " [*] The script will immediately terminate in case of integrity failure"
-#	printf ' '
-#	grep ${rootfs} sha256.txt | sha256sum -c || {
-#		printf "$red Sorry :( to say your downloaded linux file ${rootfs} was corrupted or half downloaded, but don't worry, just rerun my script\n${reset}"
-#	exit 1
-#	}
-#}
+
+checkintegrity() {
+	printf "\n${blue} [*] Checking integrity of file...\n"
+	echo " [*] The script will immediately terminate in case of integrity failure"
+	printf ' '
+	grep ${rootfs} sha256.txt | sha256sum -c || {
+		printf "$red Sorry :( to say your downloaded linux file ${rootfs} was corrupted or half downloaded, but don't worry, just rerun my script\n${reset}"
+	exit 1
+	}
+}
 
 # Utility function to extract tar file
 
