@@ -107,7 +107,7 @@ seturl() {
 gettarfile() {
 	printf "$blue [*] Getting tar file...$reset\n\n"
 	DESTINATION=$HOME/void-${libc}${SETARCH}
-	rootfs="void-$SETARCH-${libc}ROOTFS-${20191109}.tar.xz"
+	rootfs="void-$SETARCH-${libc}ROOTFS-20191109.tar.xz"
 	seturl $SETARCH
 	axel ${EXTRAARGS} --alternate "$URL"
 }
