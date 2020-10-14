@@ -7,7 +7,7 @@ This has scripts modified from Nethunter-In-Termux. So far, the update has worke
 3. Run script `bash ./TermuxVoid.sh`
 4. Now just start Void Linux `startvoid`
 
-### Compulsory Steps For First Time Use (Only for Fisrt Time After Installation)(Twice)
+### Compulsory Steps For First Time Use (Only for First Time After Installation)(Twice)
 1. #xbps-install -Su
 
 #### You have any idea to improve ? So Just give PR
