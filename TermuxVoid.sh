@@ -6,7 +6,7 @@
 
 # colors
 
-build_date=$(date +%Y%m%d)
+build_date=^(?:.*ROOTFS-)?([0-9]{4})([0-9]{2})([0-9]{2})(?:\..*)?$
 if [ -z "$2" ]
 then
 	libc=""
