@@ -6,7 +6,7 @@
 
 # colors
 
-build_date="$1"
+build_date=$(date +%Y%m%d)
 if [ -z "$2" ]
 then
 	libc=""
