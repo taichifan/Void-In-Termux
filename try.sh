@@ -115,10 +115,10 @@ build_date=head -c36 sha256sum.txt | tail -c8
 gettarfile() {
 	printf "$blue [*] Getting tar file...$reset\n\n"
 	DESTINATION=$HOME/void-${libc}${SETARCH}
-	rootfs="void-$SETARCH-${libc}ROOTFS-${build_date}.tar.xz"
+	rootfs="void-$SETARCH-${libc}ROOTFS-20210218.tar.xz"
 	seturl $SETARCH
 	axel ${EXTRAARGS} --alternate "$URL"
-}
+
 
 # Utility function to check integrity
 
