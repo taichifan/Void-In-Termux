@@ -108,7 +108,7 @@ getsha() {
 	axel ${EXTRAARGS} --alternate "https://alpha.de.repo.voidlinux.org/live/current/sha256sum.txt"
 }
 
-build_date=head -c36 sha256sum.txt | tail -c8
+# build_date=head -c36 sha256sum.txt | tail -c8
 
 # Utility function to get tar file
 
