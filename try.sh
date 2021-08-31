@@ -118,7 +118,7 @@ gettarfile() {
 	rootfs="void-$SETARCH-${libc}ROOTFS-20210218.tar.xz"
 	seturl $SETARCH
 	axel ${EXTRAARGS} --alternate "$URL"
-
+}
 
 # Utility function to check integrity
 
