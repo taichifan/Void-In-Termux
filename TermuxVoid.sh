@@ -6,7 +6,7 @@
 
 # colors
 
-build_date="$(^(?:.*ROOTFS-)?([0-9]{4})([0-9]{2})([0-9]{2})(?:\..*)?$)"
+build_date="$(wget -q -O- "https://mirror.fit.cvut.cz/voidlinux/live/current/sha256sum.txt" | awk 'NR == 1' |cut -d'.' -f1| cut -d'-' -f4)"
 if [ -z "$2" ]
 then
 	libc=""
@@ -107,7 +107,7 @@ seturl() {
 gettarfile() {
 	printf "$blue [*] Getting tar file...$reset\n\n"
 	DESTINATION=$HOME/void-${libc}${SETARCH}
-	rootfs="void-$SETARCH-${libc}ROOTFS-20210930.tar.xz"
+	rootfs="void-$SETARCH-${libc}ROOTFS-${build_date}.tar.xz"
 	seturl $SETARCH
 	axel ${EXTRAARGS} --alternate "$URL"
 }
