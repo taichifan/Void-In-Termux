@@ -6,7 +6,7 @@
 
 # colors
 
-build_date=$(^(?:.*ROOTFS-)?([0-9]{4})([0-9]{2})([0-9]{2})(?:\..*)?$)
+build_date="$(wget -q -O- "https://alpha.de.repo.voidlinux.org/live/current/sha256sum.txt" | awk 'NR == 1' |cut -d'.' -f1| cut -d'-' -f4)"
 if [ -z "$2" ]
 then
 	libc=""
@@ -116,20 +116,20 @@ gettarfile() {
 
 getsha() {
 	printf "\n${blue} [*] Getting SHA ... $reset\n\n"
-	axel ${EXTRAARGS} --alternate "https://alpha.de.repo.voidlinux.org/live/current/sha256.txt"
+	axel ${EXTRAARGS} --alternate "https://alpha.de.repo.voidlinux.org/live/current/sha256sum.txt"
 }
 
 # Utility function to check integrity
-#
-#checkintegrity() {
-#	printf "\n${blue} [*] Checking integrity of file...\n"
-#	echo " [*] The script will immediately terminate in case of integrity failure"
-#	printf ' '
-#	grep ${rootfs} sha256.txt | sha256sum -c || {
-#		printf "$red Sorry :( to say your downloaded linux file ${rootfs} was corrupted or half downloaded, but don't worry, just rerun my script\n${reset}"
-#	exit 1
-#	}
-#}
+
+checkintegrity() {
+	printf "\n${blue} [*] Checking integrity of file...\n"
+	echo " [*] The script will immediately terminate in case of integrity failure"
+	printf ' '
+	grep ${rootfs} sha256sum.txt | sha256sum -c || {
+		printf "$red Sorry :( to say your downloaded linux file ${rootfs} was corrupted or half downloaded, but don't worry, just rerun my script\n${reset}"
+	exit 1
+	}
+}
 
 # Utility function to extract tar file
 
