@@ -6,7 +6,7 @@
 
 # colors
 
-build_date="$(wget -q -O- "https://mirror.fit.cvut.cz/voidlinux/live/current/sha256sum.txt" | awk 'NR == 1' |cut -d'.' -f1| cut -d'-' -f4)"
+build_date="$(wget -q -O- "https://alpha.de.repo.voidlinux.org/live/current/sha256sum.txt" | awk 'NR == 1' |cut -d'.' -f1| cut -d'-' -f4)"
 if [ -z "$2" ]
 then
 	libc=""
